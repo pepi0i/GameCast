@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 import pandas as pd
 import streamlit as st
+from datetime import datetime
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from Model.poisson import load_model, predict_match #Importing the two functions the page needs
@@ -116,5 +117,9 @@ if home_team != away_team and st.button("Predict Match"):
            f"{s['score']} ({s['prob']:.1%})"
            for s in result["top_scores"]
        )
+   )
+
+   st.write(
+         f"**Prediction Made at:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
    )
 
