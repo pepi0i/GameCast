@@ -79,34 +79,37 @@ def load_model():
        elo_state = json.load(f)["elo"]
 
 
-   return {"df": df, "feature_cols": feature_cols, "home_model": home_model, "away_model": away_model, "elo_state": elo_state}
+   return {"df": df, "feature_cols": feature_cols, "home_model": home_model, "away_model": away_model, "elo_state": elo_state, "current_teams:": sorted(df["HomeTeam"].unique())}
 
 
 
 
 #Function to grab a team's most up-to-date Elo rating and last 15 games of stats
-def get_latest_team_state(team_name):
-   team_matches = df[(df["HomeTeam"] == team_name) | (df["AwayTeam"] == team_name)]
-   if team_matches.empty:
+def get_latest_team_state(team_name, model):
+    df = model["df"]
+    elo_state = model["elo_state"]
+
+    team_matches = df[(df["HomeTeam"] == team_name) | (df["AwayTeam"] == team_name)]
+    if team_matches.empty:
        raise ValueError(f"Team '{team_name}' not found. Available teams: {sorted(df['HomeTeam'].unique())}")
 
 
-   records = []
-   for row in team_matches.itertuples():
+    records = []
+    for row in team_matches.itertuples():
        if row.HomeTeam == team_name:
            records.append({"GF": row.FTHG, "GA": row.FTAG, "SF": row.HS, "SA": row.AS, "SFT": row.HST, "SAT": row.AST})
        else:
            records.append({"GF": row.FTAG, "GA": row.FTHG, "SF": row.AS, "SA": row.HS, "SFT": row.AST, "SAT": row.HST})
 
 
-   hist = pd.DataFrame(records)
-   elo = elo_state.get(team_name, 1450.0)
-   if OFFSEASON:
+    hist = pd.DataFrame(records)
+    elo = elo_state.get(team_name, 1450.0)
+    if OFFSEASON:
        elo = 0.75 * elo + 0.25 * 1500.0
-   state = {"Elo": elo}
-   for stat in STATS:
+    state = {"Elo": elo}
+    for stat in STATS:
        state[f"{stat}_Last15"] = hist[stat].tail(15).mean()
-   return state
+    return state
 
 
 
