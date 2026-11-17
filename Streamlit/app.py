@@ -3,9 +3,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-
-
-
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 from Model.poisson import load_model, predict_match #Importing the two functions the page needs
 
 
