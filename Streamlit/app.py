@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 from datetime import datetime
@@ -34,6 +35,8 @@ st.write(
    "This project predicts match outcomes based on previous results"
 )
 
+if "history" not in st.session_state:
+    st.session_state.history = [] 
 
 home_team = st.selectbox("Home Team", teams)
 
@@ -57,8 +60,15 @@ if home_team != away_team and st.button("Predict Match"):
 
 
    # Predict the match
-   result = predict_match(home_team, away_team, model)
-
+   result = predict_match(home_team, away_team, model) 
+   now = datetime.now()
+   st.session_state.history.append({
+        "Time": now.strftime("%b %d, %Y %I:%M:%S %p %Z"),
+        "Match": f"{home_team} vs {away_team}",
+        "Home win": f"{result['home_win']:.1%}",
+        "Draw": f"{result['draw']:.1%}",
+        "Away win": f"{result['away_win']:.1%}",
+    })
 
    # Display warnings
    for note in result["notes"]:
@@ -120,6 +130,6 @@ if home_team != away_team and st.button("Predict Match"):
    )
 
    st.write(
-         f"**Prediction Made at:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+         f"**Prediction Made at:** {now.strftime('%Y-%m-%d %H:%M:%S %p %Z')}"
    )
 
