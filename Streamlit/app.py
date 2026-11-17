@@ -132,4 +132,7 @@ if home_team != away_team and st.button("Predict Match"):
    st.write(
          f"**Prediction Made at:** {now.strftime('%Y-%m-%d %H:%M:%S %p %Z')}"
    )
+if st.session_state.history:
+    st.subheader("Your predictions this session")
+    st.dataframe(pd.DataFrame(st.session_state.history[::-1]), hide_index=True)
 
