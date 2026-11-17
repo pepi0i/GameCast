@@ -4,6 +4,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from Model.poisson import load_model, predict_match #Importing the two functions the page needs
@@ -61,7 +62,7 @@ if home_team != away_team and st.button("Predict Match"):
 
    # Predict the match
    result = predict_match(home_team, away_team, model) 
-   now = datetime.now()
+   now = datetime.now(ZoneInfo("America/Los_Angeles"))  # Get current time in Pacific Time Zone
    st.session_state.history.append({
         "Time": now.strftime("%b %d, %Y %I:%M:%S %p %Z"),
         "Match": f"{home_team} vs {away_team}",
