@@ -75,6 +75,7 @@ if st.button("Predict Match", icon=":material/bolt:", width="stretch", type="pri
 
 
    # Display probabilities
+   st.subheader("Match Prediction")
    c1, c2, c3 = st.columns(3)
 
 
