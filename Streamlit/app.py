@@ -78,9 +78,9 @@ if st.button("Predict Match", icon=":material/bolt:", width="stretch", type="pri
    c1, c2, c3 = st.columns(3)
 
 
-   c1.metric(f"{home_team} win", f"{result['home_win']:.1%}")
-   c2.metric("Draw", f"{result['draw']:.1%}")
-   c3.metric(f"{away_team} win", f"{result['away_win']:.1%}")
+   c1.metric(f"{home_team} win", f"{result['home_win']:.1%}", border=True)
+   c2.metric("Draw", f"{result['draw']:.1%}", border=True)
+   c3.metric(f"{away_team} win", f"{result['away_win']:.1%}", border=True)
 
 
    # Probability chart
