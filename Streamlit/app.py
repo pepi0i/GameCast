@@ -3,6 +3,8 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
+st.write("Background:", st.get_option("theme.backgroundColor"))
+st.write("Primary:", st.get_option("theme.primaryColor"))
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
