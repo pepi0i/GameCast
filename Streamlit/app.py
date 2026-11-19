@@ -55,7 +55,7 @@ else:
 
 
 
-if home_team != away_team and st.button("Predict Match"):
+if st.button("Predict Match", width="stretch", type="primary", disabled=(home_team==away_team)):
 
 
    # Predict the match
