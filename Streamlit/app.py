@@ -39,14 +39,12 @@ st.write(
 if "history" not in st.session_state:
     st.session_state.history = [] 
 
-home_team = st.selectbox("Home Team", teams)
-
-
-away_team = st.selectbox("Away Team", teams, index=1)
-
-
-
-
+left, right = st.columns(2)
+with left: 
+   home_team =  st.selectbox("Home Team", teams)
+with right: 
+   away_team = st.selectbox("Away Team", teams, index=1)
+   
 if home_team == away_team:
    st.warning("Please pick two different teams!")
 
